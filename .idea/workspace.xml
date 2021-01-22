@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64a0ea51-3ed9-478e-853f-0d65a14f5bee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/base_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/base_app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/v1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/v1/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/v1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/v1/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +156,7 @@
       <updated>1611265912545</updated>
       <workItem from="1611265918815" duration="1075000" />
       <workItem from="1611269582444" duration="659000" />
+      <workItem from="1611317314320" duration="413000" />
     </task>
     <servers />
   </component>
