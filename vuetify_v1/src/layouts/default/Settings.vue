@@ -206,30 +206,6 @@
 
           <div class="my-12" />
 
-          <div>
-            <strong class="mb-3 d-inline-block">THANK YOU FOR SHARING!</strong>
-          </div>
-
-          <v-btn
-            class="ma-1"
-            color="#55acee"
-            dark
-            rounded
-          >
-            <v-icon>mdi-twitter</v-icon>
-            - 45
-          </v-btn>
-
-          <v-btn
-            class="ma-1"
-            color="#3b5998"
-            dark
-            default
-            rounded
-          >
-            <v-icon>mdi-facebook</v-icon>
-            - 50
-          </v-btn>
         </v-card-text>
       </v-card>
     </v-menu>
@@ -281,6 +257,11 @@
     watch: {
       color (val) {
         this.$vuetify.theme.themes[this.isDark ? 'dark' : 'light'].primary = val
+        this.$cookies.set('settings_color', val)
+      },
+
+      mounted () {
+        this.color = this.$cookies.get('settings_color') || this.color
       },
     },
   }
