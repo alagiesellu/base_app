@@ -23,7 +23,7 @@ const router = new Router({
       route('Dashboard'),
 
       // Pages
-      route('UserProfile', null, 'components/profile'),
+      route('UserProfile', null, 'profile'),
 
       // Components
       route('Notifications', null, 'components/notifications'),
@@ -35,6 +35,9 @@ const router = new Router({
 
       // Maps
       route('Google Maps', null, 'maps/google'),
+
+      // Maps
+      route('Error', null, '*'),
     ]),
   ],
 })

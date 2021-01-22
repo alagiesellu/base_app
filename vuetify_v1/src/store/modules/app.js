@@ -15,7 +15,7 @@ const state = {
     {
       title: 'User Profile',
       icon: 'mdi-account',
-      to: '/components/profile/',
+      to: '/profile/',
     },
     {
       title: 'Regular Tables',
@@ -35,7 +35,7 @@ const state = {
     {
       title: 'Google Maps',
       icon: 'mdi-map-marker',
-      to: '/maps/google/',
+      to: '/maps/',
     },
     {
       title: 'Notifications',

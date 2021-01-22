@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64a0ea51-3ed9-478e-853f-0d65a14f5bee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/laravel_v1/config/0auth2.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vuetify_v1/public/materialdesignicons.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel_v1/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel_v1/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel_v1/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laravel_v1/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/config/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,8 +145,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tajnid" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/vuetify_v1" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/laravel_v1/config" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -156,7 +165,7 @@
       <updated>1611265912545</updated>
       <workItem from="1611265918815" duration="1075000" />
       <workItem from="1611269582444" duration="659000" />
-      <workItem from="1611317314320" duration="413000" />
+      <workItem from="1611317314320" duration="2662000" />
     </task>
     <servers />
   </component>
@@ -164,13 +173,15 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="583" y="221" width="426" height="479" key="FileChooserDialogImpl" timestamp="1611272186518">
+    <state x="583" y="221" width="426" height="479" key="FileChooserDialogImpl" timestamp="1611319984627">
       <screen x="0" y="26" width="1600" height="874" />
     </state>
+    <state x="583" y="221" key="FileChooserDialogImpl/0.26.1600.874/1600.0.1680.1050@0.26.1600.874" timestamp="1611319984627" />
     <state x="583" y="221" width="426" height="479" key="FileChooserDialogImpl/0.26.1600.874@0.26.1600.874" timestamp="1611272186518" />
-    <state x="304" y="98" key="SettingsEditor" timestamp="1611266278552">
+    <state x="304" y="98" key="SettingsEditor" timestamp="1611319865561">
       <screen x="0" y="26" width="1600" height="874" />
     </state>
+    <state x="304" y="98" key="SettingsEditor/0.26.1600.874/1600.0.1680.1050@0.26.1600.874" timestamp="1611319865561" />
     <state x="304" y="98" key="SettingsEditor/0.26.1600.874@0.26.1600.874" timestamp="1611266278552" />
   </component>
 </project>
