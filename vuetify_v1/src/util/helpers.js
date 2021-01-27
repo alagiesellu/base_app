@@ -10,6 +10,10 @@ export function getRoute (route = '') {
   return process.env.VUE_APP_URL_START + (route.startsWith('/') ? '' : '/') + route
 }
 
+export function displayDateTime (datetime) {
+  return require('dateformat')(new Date(datetime), ' dS mmmm, yyyy')
+}
+
 export const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout))
 }

@@ -30,18 +30,19 @@
           >
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length">
-                <h2>
-                  <small>Name:</small>
-                  {{ record.name }}
-                </h2>
-                <h2>
-                  <small>Name:</small>
-                  {{ headers }}
-                </h2>
-                <h2>
-                  <small>Name:</small>
-                  {{ record.name }}
-                </h2>
+                <v-list>
+                  <v-list-item
+                    v-for="(key, index) in more_headers"
+                    :key="index"
+                  >
+                    <v-list-item-content>
+                      {{ key.text }}:
+                    </v-list-item-content>
+                    <v-list-item-content class="subheading font-weight-bold">
+                      {{ record[key.value] }}
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
               </td>
             </template>
           </v-data-table>
@@ -91,18 +92,21 @@
           value: 'email',
         },
       ],
-      more_headers: [
-        {
-          text: 'Created At',
-          value: 'created_at',
-        },
-      ],
     }),
 
     computed: {
       records: get('users/records'),
       record: get('users/record'),
       loading: get('users/loading'),
+      more_headers () {
+        return [this.headers][0].concat([
+          {
+            text: 'Created At',
+            value: 'created_at',
+            datetime: true,
+          },
+        ])
+      },
     },
     mounted () {
       this.getRecords()

@@ -43,6 +43,7 @@ const actions = {
 
   record ({ commit, dispatch }, params) {
     commit('SET_LOADING', true)
+    commit('SET_RECORD', {})
     return app.actions.api_request(
       'record',
       'users/' + params.id,

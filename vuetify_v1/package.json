@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "dateformat": "^4.5.0",
     "jsona": "^1.8.0",
     "qs": "^6.9.6",
     "vue": "^2.6.11",
