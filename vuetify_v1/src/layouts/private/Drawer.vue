@@ -65,15 +65,15 @@
   import { get, sync } from 'vuex-pathify'
 
   export default {
-    name: 'DefaultDrawer',
+    name: 'PrivateDrawer',
 
     components: {
       DefaultDrawerHeader: () => import(
-        /* webpackChunkName: "default-drawer-header" */
+        /* webpackChunkName: "private-drawer-header" */
         './widgets/DrawerHeader'
       ),
       DefaultList: () => import(
-        /* webpackChunkName: "default-list" */
+        /* webpackChunkName: "private-list" */
         './List'
       ),
     },

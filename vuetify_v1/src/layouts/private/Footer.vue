@@ -15,7 +15,7 @@
   import Links from '@/components/Links'
 
   export default {
-    name: 'DefaultFooter',
+    name: 'PrivateFooter',
 
     components: { Links },
   }

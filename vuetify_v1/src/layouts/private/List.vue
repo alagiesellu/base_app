@@ -23,7 +23,7 @@
 
 <script>
   export default {
-    name: 'DefaultList',
+    name: 'PrivateList',
 
     components: {
       DefaultListGroup: () => import('./ListGroup'),

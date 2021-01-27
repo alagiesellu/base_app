@@ -45,7 +45,7 @@
   import { get } from 'vuex-pathify'
 
   export default {
-    name: 'DefaultListGroup',
+    name: 'PrivateListGroup',
 
     components: {
       DefaultListItem: () => import('./ListItem'),

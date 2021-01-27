@@ -11,7 +11,7 @@
 
     components: {
       DefaultList: () => import(
-        /* webpackChunkName: "default-list" */
+        /* webpackChunkName: "private-list" */
         '../List'
       ),
     },

@@ -36,7 +36,7 @@
 
 <script>
   export default {
-    name: 'DefaultListItem',
+    name: 'PrivateListItem',
 
     props: {
       item: {

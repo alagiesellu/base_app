@@ -39,27 +39,27 @@
   import { get, sync } from 'vuex-pathify'
 
   export default {
-    name: 'DefaultBar',
+    name: 'PrivateBar',
 
     components: {
       DefaultAccount: () => import(
-        /* webpackChunkName: "default-account" */
+        /* webpackChunkName: "private-account" */
         './widgets/Account'
       ),
       DefaultDrawerToggle: () => import(
-        /* webpackChunkName: "default-drawer-toggle" */
+        /* webpackChunkName: "private-drawer-toggle" */
         './widgets/DrawerToggle'
       ),
       DefaultGoHome: () => import(
-        /* webpackChunkName: "default-go-home" */
+        /* webpackChunkName: "private-go-home" */
         './widgets/GoHome'
       ),
       DefaultNotifications: () => import(
-        /* webpackChunkName: "default-notifications" */
+        /* webpackChunkName: "private-notifications" */
         './widgets/Notifications'
       ),
       DefaultSearch: () => import(
-        /* webpackChunkName: "default-search" */
+        /* webpackChunkName: "private-search" */
         './widgets/Search'
       ),
     },

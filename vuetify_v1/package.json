@@ -10,6 +10,9 @@
     "postversion": "node scripts/postversion.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "jsona": "^1.8.0",
+    "qs": "^6.9.6",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
     "vue-meta": "^2.3.3",

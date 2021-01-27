@@ -12,7 +12,7 @@
     name: 'App',
     metaInfo: {
       title: 'App',
-      titleTemplate: '%s | Material Dashboard Free',
+      titleTemplate: ('%s | ' + process.env.VUE_APP_NAME),
       htmlAttrs: { lang: 'en' },
       meta: [
         { charset: 'utf-8' },

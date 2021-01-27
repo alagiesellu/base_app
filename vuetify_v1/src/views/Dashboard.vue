@@ -433,10 +433,13 @@
     }),
 
     computed: {
-      sales: get('sales/sales'),
-      totalSales () {
-        return this.sales.reduce((acc, val) => acc + val.salesInM, 0)
-      },
+      // sales: get('sales/sales', { id: 1 }),
+      // totalSales () {
+      //   return this.sales.reduce((acc, val) => acc + val.salesInM, 0)
+      // },
+    },
+
+    mounted () {
     },
   }
 </script>

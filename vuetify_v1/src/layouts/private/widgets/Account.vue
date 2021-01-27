@@ -34,7 +34,7 @@
         <app-bar-item
           v-else
           :key="`item-${i}`"
-          to="/"
+          :to="p.url"
         >
           <v-list-item-title v-text="p.title" />
         </app-bar-item>
@@ -44,15 +44,23 @@
 </template>
 
 <script>
+  import { getRoute } from '@/util/helpers'
+
   export default {
     name: 'DefaultAccount',
 
     data: () => ({
       profile: [
-        { title: 'Profile' },
-        { title: 'Settings' },
+        {
+          title: 'Profile',
+          url: getRoute('profile'),
+        },
+        // { title: 'Settings' },
         { divider: true },
-        { title: 'Log out' },
+        {
+          title: 'Log out',
+          url: getRoute('logout'),
+        },
       ],
     }),
   }

@@ -6,6 +6,7 @@ import {
   layout,
   route,
 } from '@/util/routes'
+import UserModule from '@/views/UserModule'
 
 Vue.use(Router)
 
@@ -15,30 +16,36 @@ const router = new Router({
   scrollBehavior: (to, from, savedPosition) => {
     if (to.hash) return { selector: to.hash }
     if (savedPosition) return savedPosition
-
     return { x: 0, y: 0 }
   },
   routes: [
-    layout('Default', [
-      route('Dashboard'),
+    layout('Public', [
+      route('Login', null, process.env.VUE_APP_LOGIN_URL),
+    ]),
+    layout('Private', [
+      route('Dashboard', null, ''),
+
+      route('Users', { default: 'UserModule' }, 'users'),
 
       // Pages
       route('UserProfile', null, 'profile'),
 
       // Components
       route('Notifications', null, 'components/notifications'),
-      route('Icons', null, 'components/icons'),
       route('Typography', null, 'components/typography'),
 
       // Tables
       route('Regular Tables', null, 'tables/regular'),
 
       // Maps
-      route('Google Maps', null, 'maps/google'),
+      route('Google Maps', null, 'maps'),
 
-      // Maps
-      route('Error', null, '*'),
-    ]),
+      // Pages
+      route('Log Out', null, 'logout'),
+    ], process.env.VUE_APP_URL_START),
+
+    // Maps
+    route('Error', null, '*'),
   ],
 })
 

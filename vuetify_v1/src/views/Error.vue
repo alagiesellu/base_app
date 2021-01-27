@@ -10,10 +10,10 @@
           404
         </h1>
 
-        <div class="text-h4 pt-8 pb-10">
+        <h1 class="text-h4 pt-8 pb-10">
           Page not found :(
-        </div>
-
+        </h1>
+        <br>
         <v-btn
           depressed
           large
