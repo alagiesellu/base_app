@@ -4,17 +4,12 @@
     fluid
     tag="section"
   >
-    <view-intro
-      heading="Icons"
-      link="components/icons"
-    />
-
     <v-row>
       <v-col cols="12">
         <material-card
           icon="mdi-clipboard-text"
           icon-small
-          title="Simple Table"
+          :title="title"
           color="success"
         >
           <v-data-table
@@ -77,11 +72,13 @@
 <script>
   import { get } from 'vuex-pathify'
   import MyPagination from '@/layouts/MyPagination'
+  const model = 'users'
 
   export default {
     name: 'UserModuleView',
     components: { MyPagination },
     data: () => ({
+      title: 'Users',
       headers: [
         {
           text: 'Name',
@@ -95,9 +92,9 @@
     }),
 
     computed: {
-      records: get('users/records'),
-      record: get('users/record'),
-      loading: get('users/loading'),
+      records: get(`${model}/records`),
+      record: get(`${model}/record`),
+      loading: get(`${model}/loading`),
       more_headers () {
         return [this.headers][0].concat([
           {
@@ -113,10 +110,10 @@
     },
     methods: {
       getRecords (page = this.records.current + 1 || 1) {
-        this.$store.dispatch('users/records', { page: page })
+        this.$store.dispatch(`${model}/records`, { page: page })
       },
       getRecord (data) {
-        if (data.value) { this.$store.dispatch('users/record', { id: data.item.id }) }
+        if (data.value) { this.$store.dispatch(`${model}/record`, { id: data.item.id }) }
       },
     },
   }
