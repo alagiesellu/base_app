@@ -33,6 +33,7 @@ const router = new Router({
       // Components
       route('Notifications', null, 'components/notifications'),
       route('Typography', null, 'components/typography'),
+      route('Icons', null, 'components/icons'),
 
       // Tables
       route('Regular Tables', null, 'tables/regular'),
