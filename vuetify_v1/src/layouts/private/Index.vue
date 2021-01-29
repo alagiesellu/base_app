@@ -9,6 +9,8 @@
     <private-footer />
 
     <private-settings />
+
+    <private-notification />
   </v-app>
 </template>
 
@@ -19,10 +21,14 @@
     name: 'PrivateLayout',
 
     components: {
+      PrivateNotification: () => import(
+        /* webpackChunkName: "private-app-bar" */
+        './Notification'
+        ),
       PrivateBar: () => import(
         /* webpackChunkName: "private-app-bar" */
         './AppBar'
-      ),
+        ),
       PrivateDrawer: () => import(
         /* webpackChunkName: "private-drawer" */
         './Drawer'

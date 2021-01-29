@@ -9,10 +9,8 @@ const state = {
   drawer: null,
   drawerImage: true,
   mini: false,
-  notifications: {
-    errors: [],
-    success: [],
-  },
+  errors_notification: [],
+  success_notification: undefined,
   items: [
     {
       title: 'Dashboard',
@@ -64,42 +62,44 @@ const actions = {
   init: async ({ dispatch }) => {
     state.auth = getters.user()
   },
-  api_request (method, url, params = {}) {
+  reset_notification ({ commit, dispatch }) {
+    state.errors_notification = []
+    state.success_notification = undefined
+  },
+  api_request (method, url, record = {}) {
     switch (method) {
       case 'records':
-        return requestApi.records(url, params)
+        return requestApi.records(url, record)
           .then(response => {
-            return response.data
+            return response
           })
       case 'record':
-        return requestApi.record(url, params)
+        return requestApi.record(url, record)
           .then(response => {
-            return response.data
+            return response
           })
       case 'store':
-        return requestApi.store(url, params)
+        return requestApi.store(url, record)
           .then(response => {
-            return response.data
+            state.success_notification = response
           })
       case 'update':
-        return requestApi.update(url, params)
+        return requestApi.update(url, record)
           .then(response => {
-            return response.data
+            // state.success_notification = response
+            state.errors_notification = [1, 2, 3, 4, 5]
           })
       case 'destroy':
-        return requestApi.destroy(url, params)
+        return requestApi.destroy(url, record)
           .then(response => {
-            return response.data
+            state.success_notification = response
           })
       case 'upload':
-        return requestApi.upload(url, params)
+        return requestApi.upload(url, record)
           .then(response => {
-            return response.data
+            state.success_notification = response
           })
     }
-    console.log(method)
-    console.log(url)
-    console.log(params)
   },
 }
 
@@ -110,6 +110,8 @@ const getters = {
     //     return res.data
     //   })
   },
+  success_notification: state => state.success_notification,
+  errors_notification: state => state.errors_notification,
 }
 
 export default {

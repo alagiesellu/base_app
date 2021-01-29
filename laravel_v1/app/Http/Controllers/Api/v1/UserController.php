@@ -37,7 +37,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->toArray());
+
+        return response('User record successfully stored.', 200);
     }
 
     /**
@@ -76,7 +78,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        User::findOrFail($id)->update($request->toArray());
+
+        return response('User record successfully updated.', 200);
     }
 
     /**

@@ -15,24 +15,24 @@ function records (url, params = {}) {
 
   return axios.get(`${baseUrl}/${url}`, options)
     .then(response => {
-      return response
+      return response.data
     })
 }
 
 function record (url, params = {}) {
-  const options = {
-    params: params,
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-    },
-  }
+  // const options = {
+  //   params: params,
+  //   headers: {
+  //     Accept: 'application/vnd.api+json',
+  //     'Content-Type': 'application/vnd.api+json',
+  //   },
+  // }
 
-  return axios.get(`${baseUrl}/${url}`, options)
+  return axios.get(`${baseUrl}/${url}`, params)
     .then(response => {
       // const user = response.data
       // delete user.links
-      return response
+      return response.data
     })
     .catch(error => {
       console.log(error)
@@ -40,59 +40,59 @@ function record (url, params = {}) {
 }
 
 function store (url, record) {
-  const payload = jsona.serialize({
-    data: record,
-    includeNames: null,
-  })
+  // const payload = jsona.serialize({
+  //   data: record,
+  //   includeNames: null,
+  // })
+  //
+  // const options = {
+  //   headers: {
+  //     Accept: 'application/vnd.api+json',
+  //     'Content-Type': 'application/vnd.api+json',
+  //   },
+  // }
 
-  const options = {
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-    },
-  }
-
-  return axios.post(`${baseUrl}/${url}`, payload, options)
+  return axios.post(`${baseUrl}/${url}`, record)
     .then(response => {
       return response.data
     })
 }
 
 function update (url, record) {
-  const payload = jsona.serialize({
-    data: record,
-    includeNames: [],
-  })
+  // const payload = jsona.serialize({
+  //   data: record,
+  //   includeNames: [],
+  // })
+  //
+  // const options = {
+  //   headers: {
+  //     Accept: 'application/vnd.api+json',
+  //     'Content-Type': 'application/vnd.api+json',
+  //   },
+  // }
 
-  const options = {
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-    },
-  }
-
-  return axios.patch(`${baseUrl}/${url}`, payload, options)
+  return axios.patch(`${baseUrl}/${url}`, record)
     .then(response => {
       return response.data
     })
 }
 
 function destroy (url) {
-  const options = {
-    headers: {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json',
-    },
-  }
+  // const options = {
+  //   headers: {
+  //     Accept: 'application/vnd.api+json',
+  //     'Content-Type': 'application/vnd.api+json',
+  //   },
+  // }
 
-  return axios.delete(`${baseUrl}/${url}`, options)
+  return axios.delete(`${baseUrl}/${url}`)
 }
 
 function upload (url, image) {
-  const bodyFormData = new FormData()
-  bodyFormData.append('attachment', image)
+  const formData = new FormData()
+  formData.append('attachment', image)
 
-  return axios.post(`${baseUrl}/${url}`, bodyFormData)
+  return axios.post(`${baseUrl}/${url}`, formData)
     .then(response => {
       return response.data.url
     })

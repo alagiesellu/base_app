@@ -61,8 +61,7 @@ const actions = {
       'users',
       params,
     )
-      .then(response => {
-        commit('SET_RECORD', response)
+      .then(() => {
         commit('SET_LOADING', false)
       })
   },
@@ -71,11 +70,10 @@ const actions = {
     commit('SET_LOADING', true)
     return app.actions.api_request(
       'update',
-      'users',
+      'users/' + params.id,
       params,
     )
-      .then(response => {
-        commit('SET_RECORDS', response)
+      .then(() => {
         commit('SET_LOADING', false)
       })
   },
@@ -99,8 +97,7 @@ const actions = {
       'users',
       { user, image },
     )
-      .then(response => {
-        commit('SET_URL', response)
+      .then(() => {
         commit('SET_LOADING', false)
       })
   },

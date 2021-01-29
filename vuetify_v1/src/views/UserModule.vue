@@ -92,64 +92,12 @@
     </v-row>
     <template>
       <v-row justify="center">
-        <v-dialog
-          v-model="dialog"
-          persistent
-          max-width="600px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="primary"
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              Open Dialog
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ form.title }}</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <template>
-                  <v-form
-                    ref="form"
-                    v-model="form.valid"
-                    lazy-validation
-                    v-if="form.inputs"
-                  >
-                    <v-text-field
-                      v-model="form.inputs.name"
-                      :counter="10"
-                      :rules="form.rules.name"
-                      label="Name"
-                      required
-                    ></v-text-field>
-                  </v-form>
-                </template>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="dialog = false"
-              >
-                Close
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="submit"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+        <my-form-dialog
+          :form="form"
+          @close="close"
+          @submit="submit"
+          @data_input="data_input"
+        />
       </v-row>
     </template>
   </v-container>
@@ -158,17 +106,19 @@
 <script>
   import { get } from 'vuex-pathify'
   import MyPagination from '@/layouts/MyPagination'
+  import MyFormDialog from '@/layouts/MyFormDialog'
   const model = 'users'
 
   export default {
     name: 'UserModuleView',
-    components: { MyPagination },
+    components: { MyFormDialog, MyPagination },
     data: () => ({
       title: 'Users',
       icon: 'mdi-clipboard-text',
-      dialog: false,
       form: {
+        dialog: false,
         valid: true,
+        inputs: null,
       },
       headers: [
         {
@@ -200,39 +150,71 @@
       this.getRecords()
     },
     methods: {
+      data_input (data) {
+        this.form.inputs[data.idx] = data.input
+      },
+      close () {
+        this.form = {
+          dialog: false,
+        }
+      },
       doDelete () {
         this.form = {
+          dialog: true,
           title: `Delete ${this.title}`,
           inputs: {
             id: this.record.id,
           },
+          rules: {},
         }
-        this.dialog = true
       },
       doEdit () {
         this.form = {
+          dialog: true,
           title: `Edit ${this.title}`,
           inputs: this.record,
+          counter: {
+            name: process.env.VUE_APP_MAX_CHAR_LENGTH,
+            email: process.env.VUE_APP_MAX_CHAR_LENGTH,
+          },
+          prefixes: {},
+          suffixes: {},
+          types: {
+            name: 'text',
+            email: 'email',
+          },
+          labels: {
+            name: 'Name',
+            email: 'Email',
+          },
           rules: {
             name: [
               v => !!v || 'Name is required',
-              v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+              v =>
+                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+                `Name must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+            ],
+            email: [
+              v => !!v || 'Email is required',
+              v =>
+                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+                `Email must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
             ],
           },
         }
-        this.dialog = true
       },
       submit () {
-        this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
+        this.$store.dispatch(`${model}/update`, this.form.inputs)
+        this.getRecords()
+        this.close()
       },
       getRecords (page = this.records.current + 1 || 1) {
         this.$store.dispatch(`${model}/records`, { page: page })
       },
       getRecord (data) {
-        if (data.value) { this.$store.dispatch(`${model}/record`, { id: data.item.id }) }
+        if (data.value) {
+          this.$store.dispatch(`${model}/record`, { id: data.item.id })
+        }
       },
     },
   }
