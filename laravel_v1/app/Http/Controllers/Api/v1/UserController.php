@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         User::findOrFail($id)->update($request->toArray());
 
-        return response('User record successfully updated.', 200);
+        return response('User record successfully updated.');
     }
 
     /**
@@ -91,6 +91,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return response('User record successfully deleted.');
     }
 }

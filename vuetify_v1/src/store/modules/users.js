@@ -82,8 +82,7 @@ const actions = {
     commit('SET_LOADING', true)
     return app.actions.api_request(
       'destroy',
-      'users',
-      params,
+      'users/' + params.id,
     )
       .then(() => {
         commit('SET_LOADING', false)

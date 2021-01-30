@@ -86,6 +86,9 @@ function destroy (url) {
   // }
 
   return axios.delete(`${baseUrl}/${url}`)
+    .then(response => {
+      return response.data
+    })
 }
 
 function upload (url, image) {

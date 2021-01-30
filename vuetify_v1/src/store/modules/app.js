@@ -19,7 +19,7 @@ const state = {
     },
     {
       title: 'Users',
-      icon: 'mdi-account',
+      icon: 'mdi-account-multiple',
       to: getRoute('users'),
     },
     {
@@ -86,11 +86,10 @@ const actions = {
       case 'update':
         return requestApi.update(url, record)
           .then(response => {
-            // state.success_notification = response
-            state.errors_notification = [1, 2, 3, 4, 5]
+            state.success_notification = response
           })
       case 'destroy':
-        return requestApi.destroy(url, record)
+        return requestApi.destroy(url)
           .then(response => {
             state.success_notification = response
           })

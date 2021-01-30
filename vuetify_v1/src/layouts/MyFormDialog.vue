@@ -4,9 +4,8 @@
     max-width="600px"
   >
     <v-card>
-      <v-card-title>
-        <span class="headline">{{ form.title }}</span>
-      </v-card-title>
+      <v-card-title class="headline">{{ form.title }}</v-card-title>
+      <v-card-text>{{ form.description }}</v-card-text>
       <v-card-text>
         <v-container>
           <template>
@@ -17,13 +16,12 @@
               lazy-validation
             >
               <v-row
-                v-for="(item, index) in form.inputs"
+                v-for="(item, index) in form.types"
                 :key="item.id"
               >
                 <my-form-inputs
-                  v-if="form.types[index]"
                   :idx="index"
-                  :counter="form.counter[index]*1"
+                  :counter="form.counters[index]*1"
                   :input="{ m:form.inputs[index] }"
                   :label="form.labels[index]"
                   :rules="form.rules[index]"
@@ -51,7 +49,7 @@
           text
           @click="submit"
         >
-          Save
+          Submit
         </v-btn>
       </v-card-actions>
     </v-card>

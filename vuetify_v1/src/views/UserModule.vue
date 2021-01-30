@@ -10,83 +10,103 @@
           :icon="icon"
           icon-small
           :title="title"
-          color="success"
+          color="primary"
         >
-          <v-data-table
-            :headers="headers"
-            :items="records.data"
-            :loading="loading"
-            single-expand
-            item-key="id"
-            show-expand
-            hide-default-footer
-            @item-expanded="getRecord"
-            class="elevation-1"
-          >
-            <template v-slot:expanded-item="{ headers, item }">
-              <td :colspan="headers.length">
-                <v-row>
-                  <v-col cols="10">
-                    <v-list>
-                      <v-list-item
-                        v-for="(key, index) in more_headers"
-                        :key="index"
-                      >
-                        <v-list-item-content>
-                          {{ key.text }}:
-                        </v-list-item-content>
-                        <v-list-item-content class="subheading font-weight-bold">
-                          {{ record[key.value] }}
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-                  </v-col>
-                  <v-col cols="2">
-                    <v-container>
-                      <v-btn
-                        tile
-                        :block="true"
-                        color="warning"
-                        @click="doEdit"
-                      >
-                        <v-icon
-                          left
-                          dark
-                        >
-                          mdi-pencil
-                        </v-icon>
-                        Edit
-                      </v-btn>
-                      <v-btn
-                        tile
-                        :block="true"
-                        color="error"
-                        @click="doDelete"
-                      >
-                        <v-icon
-                          left
-                          dark
-                        >
-                          mdi-delete
-                        </v-icon>
-                        Delete
-                      </v-btn>
-                      <v-btn
-                        :block="true"
-                        tile
-                      >
-                        Normal
-                      </v-btn>
-                    </v-container>
-                  </v-col>
-                </v-row>
-              </td>
-            </template>
-          </v-data-table>
-          <my-pagination
-            :records="records"
-            @input="getRecords"
-          />
+          <v-row>
+            <v-col cols="12">
+              <v-btn
+                tile
+                color="primary"
+                class="float-right"
+                @click="doStore"
+              >
+                <v-icon
+                  left
+                  dark
+                >
+                  mdi-plus
+                </v-icon>
+                New Record
+              </v-btn>
+            </v-col>
+            <v-col cols="12">
+              <v-data-table
+                :headers="headers"
+                :items="records.data"
+                :loading="loading"
+                single-expand
+                item-key="id"
+                show-expand
+                hide-default-footer
+                @item-expanded="getRecord"
+                class="elevation-1"
+              >
+                <template v-slot:expanded-item="{ headers, item }">
+                  <td :colspan="headers.length">
+                    <v-row>
+                      <v-col cols="10">
+                        <v-list>
+                          <v-list-item
+                            v-for="(key, index) in more_headers"
+                            :key="index"
+                          >
+                            <v-list-item-content>
+                              {{ key.text }}:
+                            </v-list-item-content>
+                            <v-list-item-content class="subheading font-weight-bold">
+                              {{ record[key.value] }}
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-list>
+                      </v-col>
+                      <v-col cols="2">
+                        <v-container>
+                          <v-btn
+                            tile
+                            :block="true"
+                            color="warning"
+                            @click="doUpdate"
+                          >
+                            <v-icon
+                              left
+                              dark
+                            >
+                              mdi-pencil
+                            </v-icon>
+                            Edit
+                          </v-btn>
+                          <v-btn
+                            tile
+                            :block="true"
+                            color="error"
+                            @click="doDestroy"
+                          >
+                            <v-icon
+                              left
+                              dark
+                            >
+                              mdi-delete
+                            </v-icon>
+                            Delete
+                          </v-btn>
+                          <v-btn
+                            :block="true"
+                            tile
+                          >
+                            Normal
+                          </v-btn>
+                        </v-container>
+                      </v-col>
+                    </v-row>
+                  </td>
+                </template>
+              </v-data-table>
+              <my-pagination
+                :records="records"
+                @input="getRecords"
+              />
+            </v-col>
+          </v-row>
         </material-card>
       </v-col>
     </v-row>
@@ -114,10 +134,10 @@
     components: { MyFormDialog, MyPagination },
     data: () => ({
       title: 'Users',
-      icon: 'mdi-clipboard-text',
+      icon: 'mdi-account-multiple',
       form: {
         dialog: false,
-        valid: true,
+        method: null,
         inputs: null,
       },
       headers: [
@@ -158,22 +178,71 @@
           dialog: false,
         }
       },
-      doDelete () {
+      doDestroy () {
         this.form = {
           dialog: true,
-          title: `Delete ${this.title}`,
+          method: 'destroy',
+          title: 'Delete Record',
+          description: 'Are you sure you want to delete this record?',
           inputs: {
             id: this.record.id,
           },
           rules: {},
+          counters: {},
+          suffixes: {},
+          prefixes: {},
+          types: {},
+          labels: {},
         }
       },
-      doEdit () {
+      doUpdate () {
         this.form = {
           dialog: true,
+          method: 'upload',
           title: `Edit ${this.title}`,
+          description: 'Edit record details',
           inputs: this.record,
-          counter: {
+          counters: {
+            name: process.env.VUE_APP_MAX_CHAR_LENGTH,
+            email: process.env.VUE_APP_MAX_CHAR_LENGTH,
+          },
+          prefixes: {},
+          suffixes: {},
+          types: {
+            name: 'text',
+            email: 'email',
+          },
+          labels: {
+            name: 'Name',
+            email: 'Email',
+          },
+          rules: {
+            name: [
+              v => !!v || 'Name is required',
+              v =>
+                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+                `Name must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+            ],
+            email: [
+              v => !!v || 'Email is required',
+              v =>
+                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+                `Email must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+            ],
+          },
+        }
+      },
+      doStore () {
+        this.form = {
+          dialog: true,
+          method: 'store',
+          title: 'Store Record',
+          description: 'Add a new record',
+          inputs: {
+            name: '',
+            email: '',
+          },
+          counters: {
             name: process.env.VUE_APP_MAX_CHAR_LENGTH,
             email: process.env.VUE_APP_MAX_CHAR_LENGTH,
           },
@@ -204,7 +273,7 @@
         }
       },
       submit () {
-        this.$store.dispatch(`${model}/update`, this.form.inputs)
+        this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
         this.getRecords()
         this.close()
       },
