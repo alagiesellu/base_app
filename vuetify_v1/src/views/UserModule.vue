@@ -148,10 +148,10 @@
       icon: 'mdi-account-multiple',
       form: {
         dialog: false,
-        items: {},
+        types: {},
       },
       form_: {
-        dialog: false,
+        dialog: true,
         inputs: {
           name: '',
           email: '',
@@ -264,15 +264,12 @@
       data_input (data) {
         this.form.inputs[data.idx] = data.input
       },
-      close () {
-        this.form = {
-          dialog: false,
-          items: {},
-        }
+      close (closeDialog = true) {
+        this.form.inputs = {}
+        this.form.dialog = !closeDialog
       },
       doDestroy () {
-        this.form = this.form_
-        this.form.dialog = true
+        this.form = Object.assign({}, this.form_)
         this.form.method = 'destroy'
         this.form.title = 'Delete Record'
         this.form.description = 'Are you sure you want to delete this record?'
@@ -281,17 +278,16 @@
         }
       },
       doUpdate () {
-        this.form = this.form_
-        this.form.dialog = true
+        this.load_form_items()
+        this.form = Object.assign({}, this.form_)
         this.form.method = 'update'
         this.form.title = 'Edit Record'
         this.form.description = 'Are you sure you want to edit record details?'
         this.form.inputs = this.record
-        this.load_form_items()
       },
       doStore () {
-        this.form = this.form_
-        this.form.dialog = true
+        this.load_form_items()
+        this.form = Object.assign({}, this.form_)
         this.form.method = 'store'
         this.form.title = 'Store Record'
         this.form.description = 'Add a new record'
@@ -300,12 +296,13 @@
           email: '',
           roles: [],
         }
-        this.load_form_items()
       },
-      submit () {
-        this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
-        this.getRecords()
-        this.close()
+      async submit () {
+        await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
+          .then(() => {
+            this.getRecords()
+            this.close(false)
+          })
       },
       getRecords (page = this.records.current + 1 || 1) {
         return this.$store.dispatch(`${model}/records`, { page: page })

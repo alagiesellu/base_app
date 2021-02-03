@@ -44,4 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'roles' => 'array',
     ];
+
+    public function checkPassword($plain_password) : array
+    {
+        return [];
+        return [['Invalid credentials.', 'Account deactivated']];
+    }
 }

@@ -15,7 +15,7 @@
       chips
       small-chips
       solo
-      @change="emit_change"
+      @input="emit_change"
     ></v-autocomplete>
     <v-text-field
       v-else
@@ -26,7 +26,7 @@
       :type="type"
       :suffix="suffix"
       :prefix="prefix"
-      @change="emit_change"
+      @input="emit_change"
     ></v-text-field>
   </v-col>
 </template>

@@ -7,59 +7,118 @@
     <v-row justify="center">
       <v-col
         cols="12"
-        md="5"
+        md="6"
       >
-        <material-card
-          color="primary"
-          icon="mdi-account-key"
+        <v-card
+          class="mx-auto"
         >
-          <template #title>
-            Login — <small class="text-body-1">Complete your profile</small>
-          </template>
-
-          <v-form>
-            <v-container class="py-0">
-              <v-row>
-
-                <v-col cols="12">
-                  <v-text-field
-                    color="red"
-                    label="Username"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    color="red"
-                    label="Password"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                  <v-btn
-                    color="primary"
-                    min-width="150"
-                  >
-                    Login
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </material-card>
+          <v-card-text>
+            <div>Word of the Day</div>
+            <p class="display-1 text--primary">
+              Log•in
+            </p>
+            <p>adjective</p>
+            <div class="text--primary">
+              well meaning and kindly. "a benevolent smile"
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              color="primary"
+              block
+              x-large
+              @click="doLogin"
+            >
+              Login Form
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+        <my-form-dialog
+          :form="form"
+          @close="close"
+          @submit="submit"
+          @data_input="data_input"
+        />
       </v-col>
-
     </v-row>
   </v-container>
 </template>
 
 <script>
+  import MyFormDialog from '@/layouts/MyFormDialog'
+  import { get } from 'vuex-pathify'
+  const model = 'login'
   export default {
     name: 'LoginView',
-    mounted () {
+    components: { MyFormDialog },
+    data: () => ({
+      title: 'Login',
+      form: {
+        dialog: false,
+        types: {},
+      },
+      form_: {
+        dialog: true,
+        method: 'post',
+        title: 'Login',
+        description: 'Provide your login credentials.',
+        inputs: {
+          email: '',
+          password: '',
+        },
+        counters: {},
+        types: {
+          email: 'text',
+          password: 'password',
+        },
+        labels: {
+          email: 'Email',
+          password: 'Password',
+        },
+        rules: {
+          email: [
+            v => !!v || 'Email is required',
+            v => {
+              const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              return pattern.test(v) || 'Invalid e-mail.'
+            },
+          ],
+          password: [
+            v => !!v || 'Password is required',
+            v =>
+              (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+              `Password must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+          ],
+        },
+        items: {},
+        item_keys: {},
+        prefixes: {},
+        suffixes: {},
+        multiples: {},
+      },
+    }),
+    computed: {
+      token: get(`${model}/token`),
+    },
+    methods: {
+      doLogin () {
+        this.form = Object.assign({}, this.form_)
+      },
+      data_input (data) {
+        this.form.inputs[data.idx] = data.input
+      },
+      close (closeDialog = true) {
+        this.form.inputs = {}
+        this.form.dialog = !closeDialog
+      },
+      async submit () {
+        await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
+        if (this.token) {
+          this.$cookies.set('BearerToken', this.token)
+          window.location.pathname = process.env.VUE_APP_URL_START
+        }
+        this.close(false)
+      },
     },
   }
 </script>

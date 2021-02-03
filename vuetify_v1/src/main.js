@@ -22,11 +22,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 window.axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
-sync(store, router)
+const app = sync(store, router)
 
-new Vue({
+const vueApp = new Vue({
   router,
   vuetify,
   store,
   render: h => h(App),
 }).$mount('#app')
+
+const token = vueApp.$cookies.get('BearerToken')
+
+if (token) vueApp.$store.state.app.bearer = `Bearer ${token}`

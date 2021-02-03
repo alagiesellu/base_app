@@ -6,9 +6,11 @@ import requestApi from '@/store/services/request-api'
 // Data
 const state = {
   auth: {},
+  bearer: null,
   drawer: null,
   drawerImage: true,
   mini: false,
+  loading: [],
   errors_notification: [],
   success_notification: undefined,
   items: [
@@ -60,15 +62,23 @@ const mutations = make.mutations(state)
 const actions = {
   ...make.actions(state),
   init: async ({ dispatch }) => {
-    state.auth = getters.user()
+    state.auth = await requestApi.axiosGet('user')
+      .then(response => {
+        return response.data
+      })
+    requestApi.loadInits()
   },
-  catch_axios_error (error) {
-    state.errors_notification.push(error.response.statusText)
-    state.errors_notification.push(error.response.data.message)
+  toggle_loading (truth, message = 'loading...') {
+    if (truth) state.loading.push(message)
+    else state.loading.pop()
   },
-  catch_axios_success (response) {
-    if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE) state.success_notification = response.data
-  },
+  // catch_axios_error (error) {
+  //   state.errors_notification.push(error.response.statusText)
+  //   state.errors_notification.push(error.response.data.message)
+  // },
+  // catch_axios_success (response) {
+  //   if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE) state.success_notification = response.data
+  // },
   reset_notification ({ commit, dispatch }) {
     state.errors_notification = []
     state.success_notification = undefined
@@ -78,7 +88,7 @@ const actions = {
       .then(response => {
         return response.data
       })
-      .catch(error => this.catch_axios_error(error))
+      // .catch(error => this.catch_axios_error(error))
   },
   api_request (method, url, record = {}) {
     switch (method) {
@@ -86,35 +96,42 @@ const actions = {
       case 'record':
         return requestApi.axiosGet(url, record)
           .then(response => {
-            this.catch_axios_success(response)
             return response.data
           })
       case 'store':
         return requestApi.axiosPost(url, record)
-          .then(response => this.catch_axios_success(response))
-          .catch(error => this.catch_axios_error(error))
+          .then(response => {
+            return response.data
+          })
+          // .then(response => this.catch_axios_success(response))
+          // .catch(error => this.catch_axios_error(error))
       case 'update':
         return requestApi.axiosPatch(url, record)
-          .then(response => this.catch_axios_success(response))
-          .catch(error => this.catch_axios_error(error))
+          .then(response => {
+            return response.data
+          })
+          // .then(response => this.catch_axios_success(response))
+          // .catch(error => this.catch_axios_error(error))
       case 'destroy':
         return requestApi.axiosDelete(url)
-          .then(response => this.catch_axios_success(response))
+          .then(response => {
+            return response.data
+          })
+          // .then(response => this.catch_axios_success(response))
       case 'upload':
         return requestApi.axiosUpload(url, record)
-          .then(response => this.catch_axios_success(response))
-          .catch(error => this.catch_axios_error(error))
+          .then(response => {
+            return response.data
+          })
+          // .then(response => this.catch_axios_success(response))
+          // .catch(error => this.catch_axios_error(error))
     }
   },
 }
 
 const getters = {
-  user: () => {
-    // return window.axios.get('user')
-    //   .then(res => {
-    //     return res.data
-    //   })
-  },
+  auth: state => state.auth,
+  token: state => state.token,
   success_notification: state => state.success_notification,
   errors_notification: state => state.errors_notification,
 }

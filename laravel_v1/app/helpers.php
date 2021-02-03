@@ -67,5 +67,5 @@
      */
     function my_abort_errors(array $messages)
     {
-        abort(468, json_encode($messages));
+        abort(config('app.response.code.error'), json_encode($messages));
     }

@@ -1,9 +1,44 @@
 import qs from 'qs'
 import axios from 'axios'
 import Jsona from 'jsona'
+import app from '@/store/modules/app'
+import { jsonParse } from 'jsona/lib/utils'
 
 const baseUrl = process.env.VUE_APP_API_URL
-const jsona = new Jsona()
+
+axios.interceptors.request.use(
+  request => {
+    if (!request.headers.do_not_load) app.actions.toggle_loading(true)
+    return request
+  },
+)
+
+axios.interceptors.response.use(
+  response => {
+    if (!response.config.headers.do_not_load) app.actions.toggle_loading(false)
+    if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE) app.state.success_notification = response.data
+    return response
+  },
+  error => {
+    console.log(error.response)
+    // if (error.response.status === 401) {
+    //   if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL) {
+    //     window.location.pathname = process.env.VUE_APP_LOGIN_URL
+    //   }
+    // } else if (error.response.status * 1 === process.env.VUE_APP_ERROR_RESPONSE_CODE * 1) {
+    //   for (const messages of jsonParse(error.response.data.message)) {
+    //     for (const err of messages) {
+    //       app.state.errors_notification.push(err)
+    //     }
+    //   }
+    // }
+    return Promise.reject(error)
+  },
+)
+
+function loadInits () {
+  axios.defaults.headers.common.Authorization = app.getters.token()
+}
 
 function axiosGet (url, params = {}) {
   return axios.get(`${baseUrl}/${url}`, params)
@@ -49,4 +84,5 @@ export default {
   axiosPatch,
   axiosDelete,
   axiosUpload,
+  loadInits,
 }

@@ -10,8 +10,8 @@
         <v-container>
           <template>
             <v-form
-              ref="form"
               v-if="form.inputs"
+              ref="form"
               v-model="form.valid"
               lazy-validation
             >
@@ -20,7 +20,7 @@
                 :key="item.id"
               >
                 <my-form-inputs
-                  v-if="form.inputs[index]"
+                  v-if="typeof form.inputs[index] !== 'undefined'"
                   :idx="index"
                   :counter="form.counters[index]*1"
                   :input="{ m: form.inputs[index] }"
@@ -48,8 +48,7 @@
           Close
         </v-btn>
         <v-btn
-          color="blue darken-1"
-          text
+          color="primary"
           @click="submit"
         >
           Submit

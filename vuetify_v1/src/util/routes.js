@@ -9,6 +9,10 @@ export function abort (code = 404) {
     component: () => error(code),
   }
 }
+//
+// export function set_cookies(key, value) {
+//
+// }
 
 export function error (code = 404) {
   return import(

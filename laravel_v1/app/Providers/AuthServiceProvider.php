@@ -39,5 +39,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::personalAccessTokensExpireIn(
             config('Oauth2.personalAccessTokensExpireIn')
         );
+
+        Passport::tokensCan(config('data.roles'));
+
     }
 }
