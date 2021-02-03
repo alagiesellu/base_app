@@ -20,12 +20,15 @@
                 :key="item.id"
               >
                 <my-form-inputs
+                  v-if="form.inputs[index]"
                   :idx="index"
                   :counter="form.counters[index]*1"
-                  :input="{ m:form.inputs[index] }"
+                  :input="{ m: form.inputs[index] }"
+                  :items="{ list: form.items[index], keys: form.item_keys[index] }"
                   :label="form.labels[index]"
                   :rules="form.rules[index]"
                   :type="form.types[index]"
+                  :multiple="form.multiples[index]"
                   :suffix="form.suffixes[index]"
                   :prefix="form.prefixes[index]"
                   @data_input="data => $emit('data_input', data)"

@@ -15,6 +15,13 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'response' => [
+        'code' => [
+            'success' => env('SUCCESS_RESPONSE_CODE', 420),
+            'error' => env('ERROR_RESPONSE_CODE', 421),
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

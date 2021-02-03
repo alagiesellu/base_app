@@ -19,6 +19,11 @@ class UserController extends Controller
         return User::paginate();
     }
 
+    public function roles()
+    {
+        return config('data.roles');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,9 +42,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request['password'] = bcrypt('password');
         User::create($request->toArray());
 
-        return response('User record successfully stored.', 200);
+        return my_success_response('User record successfully stored.');
     }
 
     /**
@@ -80,7 +86,7 @@ class UserController extends Controller
     {
         User::findOrFail($id)->update($request->toArray());
 
-        return response('User record successfully updated.');
+        return my_success_response('User record successfully updated.');
     }
 
     /**
@@ -93,6 +99,6 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
 
-        return response('User record successfully deleted.');
+        return my_success_response('User record successfully deleted.');
     }
 }

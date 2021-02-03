@@ -62,42 +62,48 @@ const actions = {
   init: async ({ dispatch }) => {
     state.auth = getters.user()
   },
+  catch_axios_error (error) {
+    state.errors_notification.push(error.response.statusText)
+    state.errors_notification.push(error.response.data.message)
+  },
+  catch_axios_success (response) {
+    if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE) state.success_notification = response.data
+  },
   reset_notification ({ commit, dispatch }) {
     state.errors_notification = []
     state.success_notification = undefined
   },
+  get (url, params = {}) {
+    return requestApi.axiosGet(url, params)
+      .then(response => {
+        return response.data
+      })
+      .catch(error => this.catch_axios_error(error))
+  },
   api_request (method, url, record = {}) {
     switch (method) {
       case 'records':
-        return requestApi.records(url, record)
-          .then(response => {
-            return response
-          })
       case 'record':
-        return requestApi.record(url, record)
+        return requestApi.axiosGet(url, record)
           .then(response => {
-            return response
+            this.catch_axios_success(response)
+            return response.data
           })
       case 'store':
-        return requestApi.store(url, record)
-          .then(response => {
-            state.success_notification = response
-          })
+        return requestApi.axiosPost(url, record)
+          .then(response => this.catch_axios_success(response))
+          .catch(error => this.catch_axios_error(error))
       case 'update':
-        return requestApi.update(url, record)
-          .then(response => {
-            state.success_notification = response
-          })
+        return requestApi.axiosPatch(url, record)
+          .then(response => this.catch_axios_success(response))
+          .catch(error => this.catch_axios_error(error))
       case 'destroy':
-        return requestApi.destroy(url)
-          .then(response => {
-            state.success_notification = response
-          })
+        return requestApi.axiosDelete(url)
+          .then(response => this.catch_axios_success(response))
       case 'upload':
-        return requestApi.upload(url, record)
-          .then(response => {
-            state.success_notification = response
-          })
+        return requestApi.axiosUpload(url, record)
+          .then(response => this.catch_axios_success(response))
+          .catch(error => this.catch_axios_error(error))
     }
   },
 }

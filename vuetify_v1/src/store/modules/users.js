@@ -1,33 +1,47 @@
-import requestApi from '@/store/services/request-api'
 import app from '@/store/modules/app'
 
 const state = {
   records: {},
   record: {},
   meta: {},
+  roles: {},
   url: null,
   loading: false,
 }
 
 const mutations = {
-  SET_RECORDS: (state, records) => {
-    state.records = records
+  SET_RECORDS: (state, data) => {
+    state.records = data
   },
-  SET_RECORD: (state, record) => {
-    state.record = record
+  SET_RECORD: (state, data) => {
+    state.record = data
   },
-  SET_META: (state, meta) => {
-    state.meta = meta
+  SET_ROLES: (state, data) => {
+    state.roles = data
   },
-  SET_URL: (state, url) => {
-    state.url = url
+  SET_META: (state, data) => {
+    state.meta = data
   },
-  SET_LOADING: (state, loading) => {
-    state.loading = loading
+  SET_URL: (state, data) => {
+    state.url = data
+  },
+  SET_LOADING: (state, data) => {
+    state.loading = data
   },
 }
 
 const actions = {
+  get ({ commit, dispatch }, payload = {}) {
+    commit('SET_LOADING', true)
+    return app.actions.get(
+      payload.url,
+      payload.params,
+    )
+      .then(response => {
+        commit('SET_' + payload.state.toUpperCase(), response)
+        commit('SET_LOADING', false)
+      })
+  },
   records ({ commit, dispatch }, params) {
     commit('SET_LOADING', true)
     return app.actions.api_request(

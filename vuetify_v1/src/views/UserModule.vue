@@ -34,12 +34,13 @@
                 :headers="headers"
                 :items="records.data"
                 :loading="loading"
+                :items-per-page="records.per_page"
                 single-expand
                 item-key="id"
                 show-expand
                 hide-default-footer
-                @item-expanded="getRecord"
                 class="elevation-1"
+                @item-expanded="getRecord"
               >
                 <template v-slot:expanded-item="{ headers, item }">
                   <td :colspan="headers.length">
@@ -54,7 +55,17 @@
                               {{ key.text }}:
                             </v-list-item-content>
                             <v-list-item-content class="subheading font-weight-bold">
-                              {{ record[key.value] }}
+                              <span v-if="key.object">
+                                <li
+                                  v-for="el in record[key.value]"
+                                  :key="el"
+                                >
+                                  {{ key.list[el] }}
+                                </li>
+                              </span>
+                              <span v-else>
+                                {{ record[key.value] }}
+                              </span>
                             </v-list-item-content>
                           </v-list-item>
                         </v-list>
@@ -137,8 +148,60 @@
       icon: 'mdi-account-multiple',
       form: {
         dialog: false,
-        method: null,
-        inputs: null,
+        items: {},
+      },
+      form_: {
+        dialog: false,
+        inputs: {
+          name: '',
+          email: '',
+          roles: [],
+        },
+        counters: {
+          name: process.env.VUE_APP_MAX_CHAR_LENGTH,
+          email: process.env.VUE_APP_MAX_CHAR_LENGTH,
+        },
+        prefixes: {},
+        suffixes: {},
+        multiples: {
+          roles: true,
+        },
+        types: {
+          name: 'text',
+          email: 'email',
+          roles: 'select',
+        },
+        labels: {
+          name: 'Name',
+          email: 'Email',
+          roles: 'Roles',
+        },
+        rules: {
+          name: [
+            v => !!v || 'Name is required',
+            v =>
+              (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+              `Name must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+          ],
+          email: [
+            v => !!v || 'Email is required',
+            v =>
+              (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
+              `Email must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
+          ],
+          roles: [
+            v => !!v || 'Roles is required',
+          ],
+        },
+        items: {
+          roles: [],
+        },
+        item_keys: {
+          roles: {
+            value: 'id',
+            text: 'name',
+          },
+        },
       },
       headers: [
         {
@@ -156,8 +219,15 @@
       records: get(`${model}/records`),
       record: get(`${model}/record`),
       loading: get(`${model}/loading`),
+      roles: get(`${model}/roles`),
       more_headers () {
         return [this.headers][0].concat([
+          {
+            text: 'Roles',
+            value: 'roles',
+            object: true,
+            list: this.roles,
+          },
           {
             text: 'Created At',
             value: 'created_at',
@@ -168,109 +238,69 @@
     },
     mounted () {
       this.getRecords()
+        .then(() => {
+          this.$store.dispatch(
+            `${model}/get`,
+            {
+              url: `${model}/roles`,
+              state: 'roles',
+            },
+          )
+            .then(() => {
+              this.load_form_items()
+            })
+        })
     },
     methods: {
+      load_form_items () {
+        this.form.items.roles = []
+        for (const role in this.roles) {
+          this.form.items.roles.push({
+            id: role,
+            name: this.roles[role],
+          })
+        }
+      },
       data_input (data) {
         this.form.inputs[data.idx] = data.input
       },
       close () {
         this.form = {
           dialog: false,
+          items: {},
         }
       },
       doDestroy () {
-        this.form = {
-          dialog: true,
-          method: 'destroy',
-          title: 'Delete Record',
-          description: 'Are you sure you want to delete this record?',
-          inputs: {
-            id: this.record.id,
-          },
-          rules: {},
-          counters: {},
-          suffixes: {},
-          prefixes: {},
-          types: {},
-          labels: {},
+        this.form = this.form_
+        this.form.dialog = true
+        this.form.method = 'destroy'
+        this.form.title = 'Delete Record'
+        this.form.description = 'Are you sure you want to delete this record?'
+        this.form.inputs = {
+          id: this.record.id,
         }
       },
       doUpdate () {
-        this.form = {
-          dialog: true,
-          method: 'upload',
-          title: `Edit ${this.title}`,
-          description: 'Edit record details',
-          inputs: this.record,
-          counters: {
-            name: process.env.VUE_APP_MAX_CHAR_LENGTH,
-            email: process.env.VUE_APP_MAX_CHAR_LENGTH,
-          },
-          prefixes: {},
-          suffixes: {},
-          types: {
-            name: 'text',
-            email: 'email',
-          },
-          labels: {
-            name: 'Name',
-            email: 'Email',
-          },
-          rules: {
-            name: [
-              v => !!v || 'Name is required',
-              v =>
-                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
-                `Name must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
-            ],
-            email: [
-              v => !!v || 'Email is required',
-              v =>
-                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
-                `Email must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
-            ],
-          },
-        }
+        this.form = this.form_
+        this.form.dialog = true
+        this.form.method = 'update'
+        this.form.title = 'Edit Record'
+        this.form.description = 'Are you sure you want to edit record details?'
+        this.form.inputs = this.record
+        this.load_form_items()
       },
       doStore () {
-        this.form = {
-          dialog: true,
-          method: 'store',
-          title: 'Store Record',
-          description: 'Add a new record',
-          inputs: {
-            name: '',
-            email: '',
-          },
-          counters: {
-            name: process.env.VUE_APP_MAX_CHAR_LENGTH,
-            email: process.env.VUE_APP_MAX_CHAR_LENGTH,
-          },
-          prefixes: {},
-          suffixes: {},
-          types: {
-            name: 'text',
-            email: 'email',
-          },
-          labels: {
-            name: 'Name',
-            email: 'Email',
-          },
-          rules: {
-            name: [
-              v => !!v || 'Name is required',
-              v =>
-                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
-                `Name must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
-            ],
-            email: [
-              v => !!v || 'Email is required',
-              v =>
-                (v && v.length <= process.env.VUE_APP_MAX_CHAR_LENGTH) ||
-                `Email must be less than ${process.env.VUE_APP_MAX_CHAR_LENGTH} characters`,
-            ],
-          },
+        this.form = this.form_
+        this.form.dialog = true
+        this.form.method = 'store'
+        this.form.title = 'Store Record'
+        this.form.description = 'Add a new record'
+        this.form.inputs = {
+          name: '',
+          email: '',
+          roles: [],
         }
+        this.load_form_items()
       },
       submit () {
         this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
@@ -278,7 +308,7 @@
         this.close()
       },
       getRecords (page = this.records.current + 1 || 1) {
-        this.$store.dispatch(`${model}/records`, { page: page })
+        return this.$store.dispatch(`${model}/records`, { page: page })
       },
       getRecord (data) {
         if (data.value) {

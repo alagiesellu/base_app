@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('users/roles', [\App\Http\Controllers\Api\v1\UserController::class, 'roles']);
 Route::apiResource('users', \App\Http\Controllers\Api\v1\UserController::class);
