@@ -57,6 +57,9 @@
     },
     mounted () {
       this.$store.dispatch('app/get_auth_user')
+        .then(() => {
+          this.$store.dispatch('app/load_nav_items')
+        })
         .catch(() => {
           window.location.pathname = process.env.VUE_APP_LOGIN_URL
         })

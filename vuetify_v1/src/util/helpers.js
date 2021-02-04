@@ -10,6 +10,10 @@ export function getRoute (route = '') {
   return process.env.VUE_APP_URL_START + (route.startsWith('/') ? '' : '/') + route
 }
 
+export function hasRole (role) {
+  return true
+}
+
 export function displayDateTime (datetime) {
   return require('dateformat')(new Date(datetime), ' dS mmmm, yyyy')
 }

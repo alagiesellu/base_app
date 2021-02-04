@@ -254,9 +254,9 @@
     },
     methods: {
       load_form_items () {
-        this.form.items.roles = []
+        this.form_.items.roles = []
         for (const role in this.roles) {
-          this.form.items.roles.push({
+          this.form_.items.roles.push({
             id: role,
             name: this.roles[role],
           })
