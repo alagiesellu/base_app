@@ -19,6 +19,7 @@ Route::post('login', [\App\Http\Controllers\Api\v1\AuthController::class, 'login
 Route::middleware('auth:api')->group(function () {
 
     Route::get('user', [\App\Http\Controllers\Api\v1\AuthController::class, 'user']);
+    Route::post('logout', [\App\Http\Controllers\Api\v1\AuthController::class, 'logout']);
 
     Route::get('users/roles', [\App\Http\Controllers\Api\v1\UserController::class, 'roles']);
     Route::apiResource('users', \App\Http\Controllers\Api\v1\UserController::class);

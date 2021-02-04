@@ -14,6 +14,11 @@ class AuthController extends Controller
         return $request->user();
     }
 
+    public function logout(Request $request)
+    {
+        return $request->user()->token()->revoke();
+    }
+
     public function login(Request $request)
     {
         $user = User::where('email', $request['email'])->first();

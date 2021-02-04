@@ -13,13 +13,12 @@
           class="mx-auto"
         >
           <v-card-text>
-            <div>Word of the Day</div>
+            <div>{{ $store.state.app.name }}</div>
             <p class="display-1 text--primary">
               Log•in
             </p>
-            <p>adjective</p>
             <div class="text--primary">
-              well meaning and kindly. "a benevolent smile"
+              To have access to dashboard.
             </div>
           </v-card-text>
           <v-card-actions>
@@ -114,7 +113,7 @@
       async submit () {
         await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
         if (this.token) {
-          this.$cookies.set('BearerToken', this.token)
+          this.$cookies.set(process.env.VUE_APP_BEARER_TOKEN_COOKIES_KEY, this.token)
           window.location.pathname = process.env.VUE_APP_URL_START
         }
         this.close(false)

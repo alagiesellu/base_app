@@ -12,5 +12,11 @@
   export default {
     name: 'PublicLayout',
     components: { MyNotification },
+    mounted () {
+      this.$store.dispatch('app/get_auth_user')
+        .then(() => {
+          window.location.pathname = process.env.VUE_APP_URL_START
+        })
+    },
   }
 </script>

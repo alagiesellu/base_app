@@ -50,7 +50,10 @@
       auth: get('app/auth'),
     },
     mounted () {
-      // console.log(this.auth)
+      this.$store.dispatch('app/get_auth_user')
+        .catch(() => {
+          window.location.pathname = process.env.VUE_APP_LOGIN_URL
+        })
     },
   }
 </script>

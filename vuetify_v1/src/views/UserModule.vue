@@ -149,6 +149,7 @@
       form: {
         dialog: false,
         types: {},
+        items: {}, // to auth load items like roles, etc that would be needed in the form => load_form_items ()
       },
       form_: {
         dialog: true,

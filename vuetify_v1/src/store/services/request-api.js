@@ -20,34 +20,37 @@ axios.interceptors.response.use(
     return response
   },
   error => {
-    console.log(error.response)
-    // if (error.response.status === 401) {
-    //   if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL) {
-    //     window.location.pathname = process.env.VUE_APP_LOGIN_URL
-    //   }
-    // } else if (error.response.status * 1 === process.env.VUE_APP_ERROR_RESPONSE_CODE * 1) {
-    //   for (const messages of jsonParse(error.response.data.message)) {
-    //     for (const err of messages) {
-    //       app.state.errors_notification.push(err)
-    //     }
-    //   }
-    // }
+    if (error.response.status === 401) {
+      if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL) {
+        window.location.pathname = process.env.VUE_APP_LOGIN_URL
+      }
+    } else if (error.response.status * 1 === process.env.VUE_APP_ERROR_RESPONSE_CODE * 1) {
+      for (const messages of jsonParse(error.response.data.message)) {
+        for (const err of messages) {
+          app.state.errors_notification.push(err)
+        }
+      }
+    } else {
+      app.state.errors_notification.push(error.response.statusText)
+    }
     return Promise.reject(error)
   },
 )
 
-function loadInits () {
-  axios.defaults.headers.common.Authorization = app.getters.token()
+function loadBearerToken () {
+  axios.defaults.headers.common.Authorization = window.bearer_token
 }
 
 function axiosGet (url, params = {}) {
+  axios.defaults.headers.common.Authorization = window.bearer_token
   return axios.get(`${baseUrl}/${url}`, params)
     .then(response => {
       return response
     })
 }
 
-function axiosPost (url, record) {
+function axiosPost (url, record = {}) {
+  axios.defaults.headers.common.Authorization = window.bearer_token
   return axios.post(`${baseUrl}/${url}`, record)
     .then(response => {
       return response
@@ -55,6 +58,7 @@ function axiosPost (url, record) {
 }
 
 function axiosPatch (url, record) {
+  axios.defaults.headers.common.Authorization = window.bearer_token
   return axios.patch(`${baseUrl}/${url}`, record)
     .then(response => {
       return response
@@ -62,6 +66,7 @@ function axiosPatch (url, record) {
 }
 
 function axiosDelete (url) {
+  axios.defaults.headers.common.Authorization = window.bearer_token
   return axios.delete(`${baseUrl}/${url}`)
     .then(response => {
       return response
@@ -69,6 +74,7 @@ function axiosDelete (url) {
 }
 
 function axiosUpload (url, image) {
+  axios.defaults.headers.common.Authorization = window.bearer_token
   const formData = new FormData()
   formData.append('attachment', image)
 
@@ -84,5 +90,5 @@ export default {
   axiosPatch,
   axiosDelete,
   axiosUpload,
-  loadInits,
+  loadBearerToken,
 }

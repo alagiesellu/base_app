@@ -5,6 +5,7 @@ import requestApi from '@/store/services/request-api'
 
 // Data
 const state = {
+  name: '',
   auth: {},
   bearer: null,
   drawer: null,
@@ -62,11 +63,18 @@ const mutations = make.mutations(state)
 const actions = {
   ...make.actions(state),
   init: async ({ dispatch }) => {
+    requestApi.loadBearerToken()
+    state.name = process.env.VUE_APP_NAME
+  },
+  async get_auth_user ({ commit, dispatch }) {
     state.auth = await requestApi.axiosGet('user')
       .then(response => {
         return response.data
       })
-    requestApi.loadInits()
+    return state.auth
+  },
+  async logout_auth_user ({ commit, dispatch }) {
+    return await requestApi.axiosPost('logout')
   },
   toggle_loading (truth, message = 'loading...') {
     if (truth) state.loading.push(message)
@@ -131,7 +139,7 @@ const actions = {
 
 const getters = {
   auth: state => state.auth,
-  token: state => state.token,
+  bearer: state => state.bearer,
   success_notification: state => state.success_notification,
   errors_notification: state => state.errors_notification,
 }
