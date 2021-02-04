@@ -48,7 +48,9 @@
           Close
         </v-btn>
         <v-btn
+          v-if="Object.keys(form.inputs || {}).length !== 0"
           color="primary"
+          :loading="form.loading"
           @click="submit"
         >
           Submit

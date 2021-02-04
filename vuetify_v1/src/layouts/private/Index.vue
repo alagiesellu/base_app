@@ -2,6 +2,12 @@
   <v-app>
     <private-bar />
 
+    <v-progress-linear
+      color="primary"
+      indeterminate
+      :active="$store.state.app.loading.length !== 0"
+    ></v-progress-linear>
+
     <private-drawer />
 
     <private-view />
@@ -57,3 +63,8 @@
     },
   }
 </script>
+<style scoped>
+.v-progress-circular {
+  margin: 1rem;
+}
+</style>

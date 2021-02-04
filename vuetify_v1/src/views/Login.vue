@@ -54,10 +54,12 @@
       title: 'Login',
       form: {
         dialog: false,
+        loading: false,
         types: {},
       },
       form_: {
         dialog: true,
+        loading: false,
         method: 'post',
         title: 'Login',
         description: 'Provide your login credentials.',
@@ -106,17 +108,24 @@
       data_input (data) {
         this.form.inputs[data.idx] = data.input
       },
-      close (closeDialog = true) {
+      close (closeDialog = true, loading = false) {
         this.form.inputs = {}
         this.form.dialog = !closeDialog
+        this.form.loading = loading
       },
       async submit () {
+        this.form.loading = true
         await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
-        if (this.token) {
-          this.$cookies.set(process.env.VUE_APP_BEARER_TOKEN_COOKIES_KEY, this.token)
-          window.location.pathname = process.env.VUE_APP_URL_START
-        }
-        this.close(false)
+          .then(() => {
+            if (this.token) {
+              this.$cookies.set(process.env.VUE_APP_BEARER_TOKEN_COOKIES_KEY, this.token)
+              window.location.pathname = process.env.VUE_APP_URL_START
+            }
+            this.close(false, true)
+          })
+          .catch(() => {
+            this.form.loading = false
+          })
       },
     },
   }

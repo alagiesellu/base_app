@@ -76,7 +76,7 @@ const actions = {
   async logout_auth_user ({ commit, dispatch }) {
     return await requestApi.axiosPost('logout')
   },
-  toggle_loading (truth, message = 'loading...') {
+  toggle_loading (truth = true, message = 'loading...') {
     if (truth) state.loading.push(message)
     else state.loading.pop()
   },

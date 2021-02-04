@@ -16,10 +16,11 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     if (!response.config.headers.do_not_load) app.actions.toggle_loading(false)
-    if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE) app.state.success_notification = response.data
+    if (response.status === process.env.VUE_APP_SUCCESS_RESPONSE_CODE * 1) app.state.success_notification = response.data
     return response
   },
   error => {
+    if (!error.config.headers.do_not_load) app.actions.toggle_loading(false)
     if (error.response.status === 401) {
       if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL) {
         window.location.pathname = process.env.VUE_APP_LOGIN_URL

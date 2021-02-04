@@ -33,7 +33,6 @@
               <v-data-table
                 :headers="headers"
                 :items="records.data"
-                :loading="loading"
                 :items-per-page="records.per_page"
                 single-expand
                 item-key="id"
@@ -148,11 +147,13 @@
       icon: 'mdi-account-multiple',
       form: {
         dialog: false,
+        loading: false,
         types: {},
         items: {}, // to auth load items like roles, etc that would be needed in the form => load_form_items ()
       },
       form_: {
         dialog: true,
+        loading: false,
         inputs: {
           name: '',
           email: '',
@@ -219,7 +220,6 @@
     computed: {
       records: get(`${model}/records`),
       record: get(`${model}/record`),
-      loading: get(`${model}/loading`),
       roles: get(`${model}/roles`),
       more_headers () {
         return [this.headers][0].concat([
@@ -265,9 +265,10 @@
       data_input (data) {
         this.form.inputs[data.idx] = data.input
       },
-      close (closeDialog = true) {
+      close (closeDialog = true, loading = false) {
         this.form.inputs = {}
         this.form.dialog = !closeDialog
+        this.form.loading = loading
       },
       doDestroy () {
         this.form = Object.assign({}, this.form_)
@@ -299,10 +300,14 @@
         }
       },
       async submit () {
+        this.form.loading = true
         await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
           .then(() => {
             this.getRecords()
             this.close(false)
+          })
+          .catch(() => {
+            this.form.loading = false
           })
       },
       getRecords (page = this.records.current + 1 || 1) {

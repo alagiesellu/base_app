@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
