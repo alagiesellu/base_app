@@ -218,16 +218,16 @@
     }),
 
     computed: {
+      configs: get('app/configs'),
       records: get(`${model}/records`),
       record: get(`${model}/record`),
-      roles: get(`${model}/roles`),
       more_headers () {
         return [this.headers][0].concat([
           {
             text: 'Roles',
             value: 'roles',
             object: true,
-            list: this.roles,
+            list: this.configs.roles,
           },
           {
             text: 'Created At',
@@ -239,26 +239,14 @@
     },
     mounted () {
       this.getRecords()
-        .then(() => {
-          this.$store.dispatch(
-            `${model}/get`,
-            {
-              url: `${model}/roles`,
-              state: 'roles',
-            },
-          )
-            .then(() => {
-              this.load_form_items()
-            })
-        })
     },
     methods: {
       load_form_items () {
         this.form_.items.roles = []
-        for (const role in this.roles) {
+        for (const role in this.configs.roles) {
           this.form_.items.roles.push({
             id: role,
-            name: this.roles[role],
+            name: this.configs.roles[role],
           })
         }
       },

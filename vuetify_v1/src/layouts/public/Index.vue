@@ -4,7 +4,7 @@
       color="primary"
       indeterminate
       :active="$store.state.app.loading.length !== 0"
-    ></v-progress-linear>
+    />
     <v-container class="pt-lg-16 mt-lg-16">
       <router-view :key="$route.path" />
     </v-container>

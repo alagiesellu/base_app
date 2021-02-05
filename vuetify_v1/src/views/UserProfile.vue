@@ -7,171 +7,150 @@
     <v-row justify="center">
       <v-col
         cols="12"
-        md="8"
-      >
-        <material-card
-          color="primary"
-          icon="mdi-account-outline"
-        >
-          <template #title>
-            Edit Profile — <small class="text-body-1">Complete your profile</small>
-          </template>
-
-          <v-form>
-            <v-container class="py-0">
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    disabled
-                    label="Company (disabled)"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="User Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Email Address"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="First Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Last Name"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    color="purple"
-                    label="Adress"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="City"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Country"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    color="purple"
-                    label="Postal Code"
-                    type="number"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    color="purple"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                  <v-btn
-                    color="primary"
-                    min-width="150"
-                  >
-                    Update Profile
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </material-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
+        md="6"
       >
         <app-card class="mt-4 text-center">
           <v-img
             class="rounded-circle elevation-6 mt-n12 d-inline-block"
-            src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+            src="/default.png"
             width="128"
           />
 
           <v-card-text class="text-center">
-            <h6 class="text-h6 mb-2 text--secondary">
-              CEO / FOUNDER
-            </h6>
-
-            <h4 class="text-h4 mb-3 text--primary">
-              John Leider
+            <h4 class="text-h2 mb-3 text--primary">
+              {{ $store.state.app.auth.name }}
             </h4>
-
-            <p class="text--secondary">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione dolorem deserunt veniam tempora magnam quisquam quam error iusto cupiditate ducimus, et eligendi saepe voluptatibus assumenda similique temporibus placeat animi dicta?
-            </p>
-
+            <h6 class="text-h4 mb-2 text--secondary">
+              {{ $store.state.app.auth.email }}
+            </h6>
+            <v-card-text>
+              <v-chip-group
+                v-if="configs.roles"
+                active-class="grey accent-4 white--text"
+                column
+              >
+                <v-chip
+                  v-for="role in $store.state.app.auth.roles"
+                  :key="role"
+                >
+                  {{ configs.roles[role] }}
+                </v-chip>
+              </v-chip-group>
+            </v-card-text>
             <v-btn
               class="mr-0"
               color="primary"
               min-width="100"
               rounded
+              @click="doPasswordChange"
             >
-              Follow
+              <v-icon
+                left
+                dark
+              >
+                mdi-key
+              </v-icon>
+              Change Password
             </v-btn>
           </v-card-text>
         </app-card>
       </v-col>
     </v-row>
+    <template>
+      <v-row justify="center">
+        <my-form-dialog
+          :form="form"
+          @close="close"
+          @submit="submit"
+          @data_input="data_input"
+        />
+      </v-row>
+    </template>
   </v-container>
 </template>
 
 <script>
-  export default { name: 'UserProfileView' }
+  import { get } from 'vuex-pathify'
+  import MyFormDialog from '@/layouts/MyFormDialog'
+  const model = 'users'
+
+  export default {
+    name: 'UserProfileView',
+    components: { MyFormDialog },
+    data: () => ({
+      form: {
+        dialog: false,
+        loading: false,
+        types: {},
+        items: {}, // to auth load items like roles, etc that would be needed in the form => load_form_items ()
+      },
+      form_: {
+        dialog: true,
+        loading: false,
+        method: 'password',
+        inputs: {
+          password: '',
+          confirm: '',
+        },
+        counters: {},
+        prefixes: {},
+        suffixes: {},
+        multiples: {},
+        types: {
+          password: 'password',
+          confirm: 'password',
+        },
+        labels: {
+          password: 'Password',
+          confirm: 'Confirm Password',
+        },
+        rules: {
+          password: [
+            v => !!v || 'Password is required',
+          ],
+          confirm: [
+            v => !!v || 'Confirm password is required',
+          ],
+        },
+        items: {},
+        item_keys: {},
+      },
+    }),
+    computed: {
+      configs: get('app/configs'),
+    },
+    mounted () {
+      this.getRecord()
+    },
+    methods: {
+      getRecord () {
+        this.$store.dispatch('app/get_auth_user')
+      },
+      doPasswordChange () {
+        this.form = Object.assign({}, this.form_)
+        this.form.title = 'Change Password'
+        this.form.description = 'Change your login password.'
+      },
+      data_input (data) {
+        this.form.inputs[data.idx] = data.input
+      },
+      close (closeDialog = true, loading = false) {
+        this.form.inputs = {}
+        this.form.dialog = !closeDialog
+        this.form.loading = loading
+      },
+      async submit () {
+        this.form.loading = true
+        this.form.inputs.id = this.$store.state.app.auth.id
+        await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
+          .then(() => {
+            this.getRecord()
+            this.close(false)
+          })
+          .catch(() => {
+            this.form.loading = false
+          })
+      },
+    },
+  }
 </script>

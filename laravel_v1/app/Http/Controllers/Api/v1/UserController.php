@@ -20,19 +20,13 @@ class UserController extends Controller
         return User::paginate();
     }
 
-    public function roles()
+    public function password(Request $request)
     {
-        return config('data.roles');
-    }
+        User::findOrFail($request->user()->id)->update([
+            'password' => bcrypt($request['password'])
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return my_success_response('Your password successfully updated.');
     }
 
     /**
@@ -63,17 +57,6 @@ class UserController extends Controller
             $user->with(\request()['includes']);
 
         return $user->findOrFail($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

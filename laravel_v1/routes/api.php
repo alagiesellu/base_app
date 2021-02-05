@@ -21,6 +21,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', [\App\Http\Controllers\Api\v1\AuthController::class, 'user']);
     Route::post('logout', [\App\Http\Controllers\Api\v1\AuthController::class, 'logout']);
 
-    Route::get('users/roles', [\App\Http\Controllers\Api\v1\UserController::class, 'roles']);
+    Route::prefix('get')->group(function () {
+        Route::get('configs', [\App\Http\Controllers\Api\v1\GetController::class, 'configs']);
+    });
+
+    Route::patch('users/password', [\App\Http\Controllers\Api\v1\UserController::class, 'password']);
     Route::apiResource('users', \App\Http\Controllers\Api\v1\UserController::class);
 });

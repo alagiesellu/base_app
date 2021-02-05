@@ -1,6 +1,6 @@
-import qs from 'qs'
+// import qs from 'qs'
+// import Jsona from 'jsona'
 import axios from 'axios'
-import Jsona from 'jsona'
 import app from '@/store/modules/app'
 import { jsonParse } from 'jsona/lib/utils'
 

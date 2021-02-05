@@ -1,12 +1,13 @@
 // Pathify
 import { make } from 'vuex-pathify'
-import { getRoute, hasRole } from '@/util/helpers'
+import { getRoute } from '@/util/helpers'
 import requestApi from '@/store/services/request-api'
 
 // Data
 const state = {
   name: '',
   auth: {},
+  configs: {},
   bearer: null,
   drawer: null,
   drawerImage: true,
@@ -24,6 +25,12 @@ const actions = {
   init: async ({ dispatch }) => {
     requestApi.loadBearerToken()
     state.name = process.env.VUE_APP_NAME
+  },
+  async load_configs () {
+    await requestApi.axiosGet('get/configs')
+      .then(response => {
+        state.configs = response.data
+      })
   },
   load_nav_items ({ commit, dispatch }) {
     state.items = [

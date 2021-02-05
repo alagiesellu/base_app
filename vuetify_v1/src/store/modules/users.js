@@ -75,10 +75,18 @@ const actions = {
     )
   },
 
+  password ({ commit, dispatch }, params) {
+    return app.actions.api_request(
+      'update',
+      'users/password',
+      params,
+    )
+  },
+
   destroy ({ commit, dispatch }, params) {
     return app.actions.api_request(
       'destroy',
-      'users/' + params.id,
+      `users/${params.id}`,
     )
   },
 
