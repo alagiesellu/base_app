@@ -17,7 +17,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::paginate();
+        $query = User::orderBy('id', 'desc');
+
+        if (\request()->query('q'))
+            $query
+                ->where('name', 'LIKE', '%'.\request()->query('q').'%')
+                ->orWhere('email', 'LIKE', '%'.\request()->query('q').'%');
+
+        return $query->paginate();
     }
 
     public function password(Request $request)

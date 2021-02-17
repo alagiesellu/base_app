@@ -30,6 +30,17 @@
               </v-btn>
             </v-col>
             <v-col cols="12">
+              <v-card-title>
+                <v-text-field
+                  v-model="query"
+                  @change="getRecords"
+                  prepend-icon="mdi-magnify"
+                  label="Search..."
+                  single-line
+                  hide-details
+                ></v-text-field>
+                <v-spacer></v-spacer>
+              </v-card-title>
               <v-data-table
                 :headers="headers"
                 :items="records.data"
@@ -44,7 +55,7 @@
                 <template v-slot:expanded-item="{ headers, item }">
                   <td :colspan="headers.length">
                     <v-row>
-                      <v-col cols="10">
+                      <v-col>
                         <v-list>
                           <v-list-item
                             v-for="(key, index) in more_headers"
@@ -69,11 +80,10 @@
                           </v-list-item>
                         </v-list>
                       </v-col>
-                      <v-col cols="2">
+                      <v-col>
                         <v-container>
                           <v-btn
                             tile
-                            :block="true"
                             color="warning"
                             @click="doUpdate"
                           >
@@ -87,7 +97,6 @@
                           </v-btn>
                           <v-btn
                             tile
-                            :block="true"
                             color="error"
                             @click="doDestroy"
                           >
@@ -100,7 +109,6 @@
                             Delete
                           </v-btn>
                           <v-btn
-                            :block="true"
                             tile
                           >
                             Normal
@@ -143,6 +151,7 @@
     name: 'UserModuleView',
     components: { MyFormDialog, MyPagination },
     data: () => ({
+      query: '',
       title: 'Users',
       icon: 'mdi-account-multiple',
       form: {
@@ -165,6 +174,9 @@
         },
         prefixes: {},
         suffixes: {},
+        accepts: {
+          img: 'image/*'
+        },
         multiples: {
           roles: true,
         },
@@ -292,14 +304,14 @@
         await this.$store.dispatch(`${model}/${this.form.method}`, this.form.inputs)
           .then(() => {
             this.getRecords()
-            this.close(false)
+            this.close()
           })
           .catch(() => {
             this.form.loading = false
           })
       },
       getRecords (page = this.records.current + 1 || 1) {
-        return this.$store.dispatch(`${model}/records`, { page: page })
+        return this.$store.dispatch(`${model}/records`, { page: page, q: this.query })
       },
       getRecord (data) {
         if (data.value) {

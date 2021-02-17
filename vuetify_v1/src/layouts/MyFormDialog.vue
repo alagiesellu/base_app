@@ -31,6 +31,7 @@
                   :multiple="form.multiples[index]"
                   :suffix="form.suffixes[index]"
                   :prefix="form.prefixes[index]"
+                  :accept="form.accepts[index]"
                   @data_input="data => $emit('data_input', data)"
                 />
               </v-row>

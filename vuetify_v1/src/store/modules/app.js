@@ -112,23 +112,23 @@ const actions = {
       })
       // .catch(error => this.catch_axios_error(error))
   },
-  api_request (method, url, record = {}) {
+  api_request (method, url, params = {}) {
     switch (method) {
       case 'records':
       case 'record':
-        return requestApi.axiosGet(url, record)
+        return requestApi.axiosGet(url, params)
           .then(response => {
             return response.data
           })
       case 'store':
-        return requestApi.axiosPost(url, record)
+        return requestApi.axiosPost(url, params)
           .then(response => {
             return response.data
           })
           // .then(response => this.catch_axios_success(response))
           // .catch(error => this.catch_axios_error(error))
       case 'update':
-        return requestApi.axiosPatch(url, record)
+        return requestApi.axiosPatch(url, params)
           .then(response => {
             return response.data
           })
@@ -141,7 +141,7 @@ const actions = {
           })
           // .then(response => this.catch_axios_success(response))
       case 'upload':
-        return requestApi.axiosUpload(url, record)
+        return requestApi.axiosUpload(url, params)
           .then(response => {
             return response.data
           })

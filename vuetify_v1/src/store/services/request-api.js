@@ -22,7 +22,8 @@ axios.interceptors.response.use(
   error => {
     if (!error.config.headers.do_not_load) app.actions.toggle_loading(false)
     if (error.response.status === 401) {
-      if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL) {
+      if (window.location.pathname !== process.env.VUE_APP_LOGIN_URL && !error.config.headers.no_redirect) {
+        if (window.location.pathname !== '/logout') window.sessionStorage.setItem('redirect_pathname', window.location.pathname)
         window.location.pathname = process.env.VUE_APP_LOGIN_URL
       }
     } else if (error.response.status * 1 === process.env.VUE_APP_ERROR_RESPONSE_CODE * 1) {
@@ -42,44 +43,44 @@ function loadBearerToken () {
   axios.defaults.headers.common.Authorization = window.bearer_token
 }
 
-function axiosGet (url, params = {}) {
-  axios.defaults.headers.common.Authorization = window.bearer_token
-  return axios.get(`${baseUrl}/${url}`, params)
+async function axiosGet (url, params = {}) {
+  this.loadBearerToken()
+  return await axios.get(`${baseUrl}/${url}`, { params: params })
     .then(response => {
       return response
     })
 }
 
-function axiosPost (url, record = {}) {
-  axios.defaults.headers.common.Authorization = window.bearer_token
-  return axios.post(`${baseUrl}/${url}`, record)
+async function axiosPost (url, record = {}) {
+  this.loadBearerToken()
+  return await axios.post(`${baseUrl}/${url}`, record)
     .then(response => {
       return response
     })
 }
 
-function axiosPatch (url, record) {
-  axios.defaults.headers.common.Authorization = window.bearer_token
-  return axios.patch(`${baseUrl}/${url}`, record)
+async function axiosPatch (url, record) {
+  this.loadBearerToken()
+  return await axios.patch(`${baseUrl}/${url}`, record)
     .then(response => {
       return response
     })
 }
 
-function axiosDelete (url) {
-  axios.defaults.headers.common.Authorization = window.bearer_token
-  return axios.delete(`${baseUrl}/${url}`)
+async function axiosDelete (url) {
+  this.loadBearerToken()
+  return await axios.delete(`${baseUrl}/${url}`)
     .then(response => {
       return response
     })
 }
 
-function axiosUpload (url, image) {
-  axios.defaults.headers.common.Authorization = window.bearer_token
+async function axiosUpload (url, image) {
+  this.loadBearerToken()
   const formData = new FormData()
   formData.append('attachment', image)
 
-  return axios.post(`${baseUrl}/${url}`, formData)
+  return await axios.post(`${baseUrl}/${url}`, formData)
     .then(response => {
       return response
     })

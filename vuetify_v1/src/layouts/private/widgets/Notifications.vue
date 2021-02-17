@@ -16,7 +16,6 @@
       >
         <v-badge
           bordered
-          color="red"
           overlap
         >
           <template v-slot:badge>

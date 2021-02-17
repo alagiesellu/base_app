@@ -17,6 +17,24 @@
       solo
       @input="emit_change"
     ></v-autocomplete>
+    <span
+      v-else-if="type === 'file'"
+    >
+      <v-text-field
+        v-model="filename"
+        :label="label"
+        :rules="rules"
+        prepend-icon="mdi-file"
+        @click="$refs[idx].click()"
+      ></v-text-field>
+      <input
+        type="file"
+        style="display: none"
+        :ref="idx"
+        :accept="accept"
+        @change="onFilePicked"
+      ><!-- accept="image/*" -->
+    </span>
     <v-text-field
       v-else
       v-model="input.m"
@@ -45,10 +63,34 @@
       suffix: String,
       prefix: String,
       multiple: Boolean,
+      accept: String,
+    },
+    data () {
+      return {
+        filename: '',
+      }
     },
     methods: {
       emit_change () {
         this.$emit('data_input', { idx: this.idx, input: this.input.m })
+      },
+      // pickFile () {
+      //   this.$refs[this.idx].click()
+      // },
+      onFilePicked (e) {
+        const files = e.target.files
+        if (files[0] !== undefined) {
+          this.filename = files[0].name
+          if (this.filename.lastIndexOf('.') <= 0) return
+
+          const fr = new FileReader()
+          fr.readAsDataURL(files[0])
+          fr.addEventListener('load', () => {
+            this.input.m = fr.result
+            // this.input.f = files[0] // this is an image file that can be sent to server...
+            this.emit_change()
+          })
+        } else this.filename = ''
       },
     },
   }
