@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="64a0ea51-3ed9-478e-853f-0d65a14f5bee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel_v1/app/Http/Controllers/Api/v1/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/app/Http/Controllers/Api/v1/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laravel_v1/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/laravel_v1/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormDialog.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/layouts/private/widgets/Notifications.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/layouts/private/widgets/Notifications.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/services/request-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/services/request-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +183,7 @@
       <workItem from="1612526149960" duration="1661000" />
       <workItem from="1612564590828" duration="2025000" />
       <workItem from="1612797981162" duration="43000" />
-      <workItem from="1613482357935" duration="12193000" />
+      <workItem from="1613482357935" duration="12658000" />
     </task>
     <servers />
   </component>

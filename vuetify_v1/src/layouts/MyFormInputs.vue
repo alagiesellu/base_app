@@ -24,7 +24,7 @@
         v-model="filename"
         :label="label"
         :rules="rules"
-        prepend-icon="mdi-file"
+        prepend-icon="mdi-upload"
         @click="$refs[idx].click()"
       ></v-text-field>
       <input
