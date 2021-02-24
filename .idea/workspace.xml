@@ -4,6 +4,8 @@
     <list default="true" id="64a0ea51-3ed9-478e-853f-0d65a14f5bee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/UserProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/UserProfile.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +186,9 @@
       <workItem from="1612564590828" duration="2025000" />
       <workItem from="1612797981162" duration="43000" />
       <workItem from="1613482357935" duration="12658000" />
+      <workItem from="1613989830892" duration="4415000" />
+      <workItem from="1614076600824" duration="412000" />
+      <workItem from="1614077939578" duration="16000" />
     </task>
     <servers />
   </component>

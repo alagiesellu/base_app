@@ -175,7 +175,7 @@
         prefixes: {},
         suffixes: {},
         accepts: {
-          img: 'image/*'
+          img: 'image/*',
         },
         multiples: {
           roles: true,
@@ -183,7 +183,7 @@
         types: {
           name: 'text',
           email: 'email',
-          roles: 'select',
+          roles: 'multiple-select',
         },
         labels: {
           name: 'Name',

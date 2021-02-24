@@ -1,7 +1,7 @@
 <template>
   <v-col>
     <v-autocomplete
-      v-if="type === 'select'"
+      v-if="type === 'multiple-select'"
       v-model="input.m"
       :items="items.list"
       :item-text="items.keys.text"
@@ -17,6 +17,18 @@
       solo
       @input="emit_change"
     ></v-autocomplete>
+    <v-select
+      v-else-if="type === 'single-select'"
+      v-model="input.m"
+      :items="items.list"
+      :item-text="items.keys.text"
+      :item-value="items.keys.value"
+      :rules="rules"
+      :label="label"
+      :suffix="suffix"
+      :prefix="prefix"
+      @input="emit_change"
+    ></v-select>
     <span
       v-else-if="type === 'file'"
     >
