@@ -51,46 +51,46 @@ async function axiosGet (url, params = {}) {
     })
 }
 
-async function axiosPost (url, record = {}) {
+async function axiosPost (url, record, params = {}) {
   this.loadBearerToken()
-  return await axios.post(`${baseUrl}/${url}`, record)
+  return await axios.post(`${baseUrl}/${url}`, record, { params: params })
     .then(response => {
       return response
     })
 }
 
-async function axiosPatch (url, record) {
+async function axiosPatch (url, record, params = {}) {
   this.loadBearerToken()
-  return await axios.patch(`${baseUrl}/${url}`, record)
+  return await axios.patch(`${baseUrl}/${url}`, record, { params: params })
     .then(response => {
       return response
     })
 }
 
-async function axiosDelete (url) {
+async function axiosDelete (url, params = {}) {
   this.loadBearerToken()
-  return await axios.delete(`${baseUrl}/${url}`)
+  return await axios.delete(`${baseUrl}/${url}`, { params: params })
     .then(response => {
       return response
     })
 }
 
-async function axiosUpload (url, image) {
-  this.loadBearerToken()
-  const formData = new FormData()
-  formData.append('attachment', image)
-
-  return await axios.post(`${baseUrl}/${url}`, formData)
-    .then(response => {
-      return response
-    })
-}
+// async function axiosUpload (url, image) {
+//   this.loadBearerToken()
+//   const formData = new FormData()
+//   formData.append('attachment', image)
+//
+//   return await axios.post(`${baseUrl}/${url}`, formData)
+//     .then(response => {
+//       return response
+//     })
+// }
 
 export default {
   axiosGet,
   axiosPost,
   axiosPatch,
   axiosDelete,
-  axiosUpload,
+  // axiosUpload,
   loadBearerToken,
 }

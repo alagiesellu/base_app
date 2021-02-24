@@ -4,8 +4,10 @@
     <list default="true" id="64a0ea51-3ed9-478e-853f-0d65a14f5bee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/layouts/MyFormInputs.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/UserModule.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/UserProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/UserProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/modules/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/modules/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/modules/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/store/services/request-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/store/services/request-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vuetify_v1/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vuetify_v1/src/views/Login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +143,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../utg_research_fe" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -189,6 +192,7 @@
       <workItem from="1613989830892" duration="4415000" />
       <workItem from="1614076600824" duration="412000" />
       <workItem from="1614077939578" duration="16000" />
+      <workItem from="1614166890068" duration="4277000" />
     </task>
     <servers />
   </component>

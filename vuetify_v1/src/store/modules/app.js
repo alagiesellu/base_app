@@ -110,7 +110,24 @@ const actions = {
       .then(response => {
         return response.data
       })
-      // .catch(error => this.catch_axios_error(error))
+  },
+  post (url, record, params = {}) {
+    return requestApi.axiosPost(url, record, params)
+      .then(response => {
+        return response.data
+      })
+  },
+  patch (url, record, params = {}) {
+    return requestApi.axiosPatch(url, record, params)
+      .then(response => {
+        return response.data
+      })
+  },
+  delete (url, params = {}) {
+    return requestApi.axiosDelete(url, params)
+      .then(response => {
+        return response.data
+      })
   },
   api_request (method, url, params = {}) {
     switch (method) {
@@ -121,7 +138,7 @@ const actions = {
             return response.data
           })
       case 'store':
-        return requestApi.axiosPost(url, params)
+        return requestApi.axiosPost(url, record,  params)
           .then(response => {
             return response.data
           })
@@ -140,13 +157,13 @@ const actions = {
             return response.data
           })
           // .then(response => this.catch_axios_success(response))
-      case 'upload':
-        return requestApi.axiosUpload(url, params)
-          .then(response => {
-            return response.data
-          })
-          // .then(response => this.catch_axios_success(response))
-          // .catch(error => this.catch_axios_error(error))
+      // case 'upload':
+      //   return requestApi.axiosUpload(url, params)
+      //     .then(response => {
+      //       return response.data
+      //     })
+      //     .then(response => this.catch_axios_success(response))
+      //     .catch(error => this.catch_axios_error(error))
     }
   },
 }

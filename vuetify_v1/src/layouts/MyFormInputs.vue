@@ -17,6 +17,13 @@
       solo
       @input="emit_change"
     ></v-autocomplete>
+    <v-checkbox
+      v-else-if="type === 'checkbox'"
+      v-model="input.m"
+      :rules="rules"
+      :label="label"
+      @change="emit_change"
+    ></v-checkbox>
     <v-select
       v-else-if="type === 'single-select'"
       v-model="input.m"
@@ -47,6 +54,16 @@
         @change="onFilePicked"
       ><!-- accept="image/*" -->
     </span>
+    <v-textarea
+      v-else-if="type === 'textarea'"
+      v-model="input.m"
+      :counter="counter"
+      :rules="rules"
+      :label="label"
+      :suffix="suffix"
+      :prefix="prefix"
+      @input="emit_change"
+    ></v-textarea>
     <v-text-field
       v-else
       v-model="input.m"

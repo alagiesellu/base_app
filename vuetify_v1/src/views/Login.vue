@@ -96,6 +96,7 @@
         prefixes: {},
         suffixes: {},
         multiples: {},
+        accepts: {},
       },
     }),
     computed: {

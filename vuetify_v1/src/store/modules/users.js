@@ -41,7 +41,9 @@ const actions = {
     return app.actions.api_request(
       'records',
       'users',
-      params,
+      {
+        record: params,
+      },
     )
       .then(response => {
         commit('SET_RECORDS', response)
@@ -87,14 +89,6 @@ const actions = {
     return app.actions.api_request(
       'destroy',
       `users/${params.id}`,
-    )
-  },
-
-  upload ({ commit, dispatch }, { user, image }) {
-    return app.actions.api_request(
-      'upload',
-      'users',
-      { user, image },
     )
   },
 }
